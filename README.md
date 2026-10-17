@@ -1,7 +1,7 @@
 # WorkBuddy2API-Hub — 国际版、国内版多账号网关中枢
 
 <p align="center">
-  <a href="https://github.com/xybzljc/workbuddy2api-hub/releases"><img src="https://img.shields.io/badge/Release-v1.7.13-2496ED?style=flat-square" alt="Version 1.7.13"></a>
+  <a href="https://github.com/xybzljc/workbuddy2api-hub/releases"><img src="https://img.shields.io/badge/Release-v1.7.14-2496ED?style=flat-square" alt="Version 1.7.14"></a>
   <img src="https://img.shields.io/badge/Python-3.9+-blue.svg?style=flat-square" alt="Python">
   <img src="https://img.shields.io/badge/API-OpenAI_Compatible-412991?style=flat-square" alt="OpenAI API">
   <img src="https://img.shields.io/badge/Dual_Realm-Intl_&_CN-0DBD8B?style=flat-square" alt="Dual Realm">
@@ -415,8 +415,9 @@ export ANTHROPIC_API_KEY="你在看板设置中添加并绑定的API_Key"
 ### Unreleased
 
 - **阿里云 systemd 部署支持手动安装稳定版**：设置页可从配置的 fork Release 安装新版本；更新包必须通过 `SHA256SUMS` 与 `release-manifest.json` 校验，账号与用量目录列为保护路径。网关只提交版本号，root-owned systemd 更新服务负责备份、替换、重启与健康检查；失败会恢复程序文件。每日检查仍默认关闭，打开后也只检查、不自动安装。
+- **修复阿里云更新器安装与启动时序**：安装脚本在服务重启后最多等待 120 秒让网关监听 `/health`；更新器暂存目录改到 `PrivateTmp` 可见的 root-only `/var/lib` 路径，避免 systemd 挂载隔离阻止服务启动。
 
-已发布版本的完整记录（v1.4.5 ~ v1.7.12，含每版的 PR 归属）见 **[docs/CHANGELOG.md](docs/CHANGELOG.md)**。
+已发布版本的完整记录（v1.4.5 ~ v1.7.13，含每版的 PR 归属）见 **[docs/CHANGELOG.md](docs/CHANGELOG.md)**。
 
 ## 七、致谢与引用声明 (Credits & References)
 
