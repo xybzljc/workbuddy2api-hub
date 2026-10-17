@@ -51,6 +51,19 @@ def _package(path, files=None, protected=None, extra=()):
 
 
 class VersionAndPathTests(unittest.TestCase):
+    def test_updater_stage_path_is_visible_with_private_tmp(self):
+        service_path = os.path.join(
+            ROOT, "ops", "aliyun", "workbuddy2api-hub-updater.service")
+        with open(HELPER_PATH, "r", encoding="utf-8") as fh:
+            helper = fh.read()
+        with open(service_path, "r", encoding="utf-8") as fh:
+            service = fh.read()
+        self.assertIn('STAGE_ROOT = "/var/lib/workbuddy2api-hub-updater"', helper)
+        self.assertIn("PrivateTmp=true", service)
+        self.assertIn("ReadWritePaths=/opt/workbuddy2api-hub /var/backups/workbuddy2api-hub "
+                      "/var/lib/workbuddy2api-hub-updater", service)
+        self.assertNotIn("/var/tmp/workbuddy2api-hub-updater", service)
+
     def test_bootstrap_waits_for_gateway_to_listen_after_restart(self):
         installer = os.path.join(ROOT, "ops", "aliyun", "install-updater.sh")
         with open(installer, "r", encoding="utf-8") as fh:

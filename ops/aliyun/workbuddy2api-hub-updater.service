@@ -15,4 +15,4 @@ NoNewPrivileges=true
 ProtectSystem=strict
 ProtectHome=true
 PrivateTmp=true
-ReadWritePaths=/opt/workbuddy2api-hub /var/backups/workbuddy2api-hub /var/tmp/workbuddy2api-hub-updater /run/workbuddy2api-hub-updater /run/lock
+ReadWritePaths=/opt/workbuddy2api-hub /var/backups/workbuddy2api-hub /var/lib/workbuddy2api-hub-updater /run/workbuddy2api-hub-updater /run/lock

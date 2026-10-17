@@ -63,9 +63,7 @@ done
 
 install -d -o root -g root -m 0700 "$BACKUP_ROOT" "$BOOTSTRAP_BACKUP"
 install -d -o root -g wbproxy -m 1730 /run/workbuddy2api-hub-updater
-install -d -o root -g root -m 0700 \
-    /var/lib/workbuddy2api-hub-updater \
-    /var/tmp/workbuddy2api-hub-updater
+install -d -o root -g root -m 0700 /var/lib/workbuddy2api-hub-updater
 install -d -o root -g root -m 0755 /usr/local/libexec /etc/tmpfiles.d "$DROPIN_DIR"
 
 if [ -e "$ENV_FILE" ]; then
