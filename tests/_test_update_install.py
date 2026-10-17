@@ -51,6 +51,16 @@ def _package(path, files=None, protected=None, extra=()):
 
 
 class VersionAndPathTests(unittest.TestCase):
+    def test_bootstrap_waits_for_gateway_to_listen_after_restart(self):
+        installer = os.path.join(ROOT, "ops", "aliyun", "install-updater.sh")
+        with open(installer, "r", encoding="utf-8") as fh:
+            source = fh.read()
+        self.assertIn("wait_for_gateway_health(){", source)
+        self.assertIn('while [ "$attempt" -lt 60 ]; do', source)
+        self.assertIn("sleep 2", source)
+        self.assertIn("if ! wait_for_gateway_health; then", source)
+        self.assertIn("rollback_bootstrap", source)
+
     def test_panel_request_paths_match_the_installed_systemd_units(self):
         ops_dir = os.path.join(ROOT, "ops", "aliyun")
         with open(os.path.join(ops_dir, "workbuddy2api-hub-updater.path"),

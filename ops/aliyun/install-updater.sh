@@ -117,7 +117,19 @@ if ! systemctl daemon-reload || ! systemctl enable --now "$UPDATER_NAME.path" \
     exit 1
 fi
 
-if ! /usr/bin/python3 -c 'import json,urllib.request; d=json.load(urllib.request.urlopen("http://127.0.0.1:8788/health", timeout=5)); raise SystemExit(0 if d.get("ok") is True else 1)'; then
+wait_for_gateway_health(){
+    attempt=0
+    while [ "$attempt" -lt 60 ]; do
+        if /usr/bin/python3 -c 'import json,urllib.request; d=json.load(urllib.request.urlopen("http://127.0.0.1:8788/health", timeout=5)); raise SystemExit(0 if d.get("ok") is True else 1)' >/dev/null 2>&1; then
+            return 0
+        fi
+        attempt=$((attempt + 1))
+        sleep 2
+    done
+    return 1
+}
+
+if ! wait_for_gateway_health; then
     echo "Gateway health check failed after enabling updater. Bootstrap files are backed up at $BOOTSTRAP_BACKUP." >&2
     rollback_bootstrap
     exit 1
